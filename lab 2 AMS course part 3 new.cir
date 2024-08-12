@@ -1,0 +1,49 @@
+Op-Amp Subcircuit
+
+
+*op-amp definition
+
+*SUBCKT ports definition
+
+.subckt OPAMP 1 2 3
+
+* gm = UGF * 2 * PI * Cout
+* ugf = A0 * 1/(2*pi*RC)
+* assume C = 5p then gm = 0.315M and R = 32 MEG .
+
+*IN+ -> 1
+*IN- -> 2
+*OUT -> 3
+
+* The vccs
+
+GOPAMP 0 4 1 2 0.315M
+
+*redundant connection made at +ve and -ve input terminal
+
+I1 1 0 0
+I2 2 0 0
+I3 3 0 0
+
+*opamp parameter
+
+R1 4 0 32MEG
+C1 4 0 5P
+
+*VCVS AT THE OUTPUT acting as a puffer
+EOUTPUT 3 0 4 0 1
+
+.ENDS OPAMP
+
+XOPAMP1 1 2 3 OPAMP
+
+*AC source
+*RFB1 3 2 1
+Vfb 3 2 0
+VIN 1 0 AC 1
+.AC DEC 10 1 100MEGs
+
+
+.op
+.end
+.end
